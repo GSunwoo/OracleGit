@@ -42,7 +42,21 @@ select * from tb_sample;
 */
 insert into tb_sample(no, loc, manager) values (50, '제주', '동탁');
 
+/*
+지금까지의 작업을 그대로 유지하겠다는 명령으로 커밋을 수행하지 않으면
+오라클 외부에서는 변경된 레코드를 확인할 수 없다.
+여기서 말하는 외부란 Java/JSP와 같은 Oracle 이외의 프로그램을 말한다.
+*/
+commit;
 
+--커밋 이후 새로운 레코드를 삽입하면 임시테이블에 저장된다.
+insert into tb_sample(no, loc, manager) values (60, '태국', '손오공');
+--select 명령으로 확인할 수 있지만 실제 테이블에는 반영되지 않은 상태이다.
+select * from tb_sample;
+--롤백 명령으로 마지막 커밋 상태로 되돌릴 수 있다.
+rollback;
+--마지막 커밋 이후에 삽입된 '손오공'은 제거된다.
+select * from tb_sample;
 
 
 
